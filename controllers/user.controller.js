@@ -1,7 +1,12 @@
 const User = require('../model/user.model')
+const { validate } = require('../utils/validate')
 
 const createUser = async (req, res, next) => {
   const { name, email, country } = req.body
+  if (validate({ name, email, country, res })) {
+    return
+  }
+
   try {
     const newUser = await User.create({ name, email, country })
 
@@ -87,6 +92,10 @@ const getUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   const { name, email, country } = req.body
+
+  if (validate({ name, email, country, res })) {
+    return
+  }
 
   try {
     const user = await User.findByIdAndUpdate(req.params.userID, {

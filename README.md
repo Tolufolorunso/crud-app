@@ -20,7 +20,7 @@ $ npm install
 ## Start the App
 
 ```
-$ npm start
+$ npm run dev
 ```
 
 All the packages needed for this API to works will be installed with this above
