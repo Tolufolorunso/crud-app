@@ -18,7 +18,7 @@ app.use('/users', userRoute)
 
 app.get('/', (req, res) => {
   res.json({
-    status: 'success',
+    message: 'success',
     data: {
       name: 'Tolulope Folorunso',
       message: 'Welcome Home',

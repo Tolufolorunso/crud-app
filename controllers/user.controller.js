@@ -6,7 +6,7 @@ const createUser = async (req, res, next) => {
     const newUser = await User.create({ name, email, country })
 
     res.status(201).json({
-      status: 'success',
+      message: 'success',
       data: {
         user: newUser,
       },
@@ -14,14 +14,14 @@ const createUser = async (req, res, next) => {
   } catch (error) {
     if (error.code === 11000) {
       return res.status(400).json({
-        status: 'fail',
+        message: 'fail',
         data: {
           errorMessage: 'Email already exists',
         },
       })
     }
     return res.status(500).json({
-      status: 'fail',
+      message: 'fail',
       data: {
         errorMessage: 'Server Error, try again',
       },
@@ -33,7 +33,7 @@ const getAllUser = async (req, res, next) => {
     const users = await User.find()
     if (!users) {
       return res.status(404).json({
-        status: 'fail',
+        message: 'fail',
         data: {
           message: 'No users found in DB',
         },
@@ -41,14 +41,14 @@ const getAllUser = async (req, res, next) => {
     }
 
     res.status(200).json({
-      status: 'success',
+      message: 'success',
       data: {
         user,
       },
     })
   } catch (error) {
     return res.status(500).json({
-      status: 'fail',
+      message: 'fail',
       data: {
         errorMessage: 'Server Error, try again',
       },
@@ -61,7 +61,7 @@ const getUser = async (req, res, next) => {
     const user = await User.findById(req.params.userID)
     if (!user) {
       return res.status(404).json({
-        status: 'fail',
+        message: 'fail',
         data: {
           message: 'User not found',
         },
@@ -69,14 +69,14 @@ const getUser = async (req, res, next) => {
     }
 
     res.status(200).json({
-      status: 'success',
+      message: 'success',
       data: {
         user,
       },
     })
   } catch (error) {
     return res.status(500).json({
-      status: 'fail',
+      message: 'fail',
       data: {
         errorMessage: 'Server Error, try again',
       },
@@ -97,13 +97,18 @@ const updateUser = async (req, res, next) => {
     console.log(user)
 
     res.status(200).json({
-      status: 'success',
+      message: 'success',
       data: {
         user,
       },
     })
   } catch (error) {
-    console.log(error)
+    res.status(500).json({
+      message: 'fail',
+      data: {
+        errorMessage: 'Server Error, try again',
+      },
+    })
   }
 }
 
@@ -114,14 +119,14 @@ const deleteUser = async (req, res, next) => {
     await User.findByIdAndDelete(req.params.userID)
 
     res.status(200).json({
-      status: 'success',
+      message: 'success',
       data: {
         user: null,
       },
     })
   } catch (error) {
     res.status(500).json({
-      status: 'fail',
+      message: 'fail',
       data: {
         errorMessage: 'Server Error, try again',
       },
